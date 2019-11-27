@@ -3,7 +3,7 @@ package player;
 import constants.Constants;
 import ground.BattleField;
 
-public class Pyromancer extends Player implements Visitor, Visitable {
+public class Pyromancer extends Player implements Fighter, Fought {
     public Pyromancer() {}
 
     public Pyromancer(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y) {
@@ -77,7 +77,7 @@ public class Pyromancer extends Player implements Visitor, Visitable {
     }
 
     /* Implements the fight between the current player and a Pyromancer */
-    public void visit(Pyromancer p) {
+    public void battle(Pyromancer p) {
         this.computeOvertimeDamage();
 
         float fireblastDamage = this.getBasicFireblastDamage();
@@ -102,7 +102,7 @@ public class Pyromancer extends Player implements Visitor, Visitable {
     }
 
     /* Implements the fight between the current player and a Knight */
-    public void visit(Knight k) {
+    public void battle(Knight k) {
         this.computeOvertimeDamage();
 
         float fireblastDamage = this.getBasicFireblastDamage();
@@ -127,7 +127,7 @@ public class Pyromancer extends Player implements Visitor, Visitable {
     }
 
     /* Implements the fight between the current player and a Rogue */
-    public void visit(Rogue r) {
+    public void battle(Rogue r) {
         this.computeOvertimeDamage();
 
         float fireblastDamage = this.getBasicFireblastDamage();
@@ -151,7 +151,7 @@ public class Pyromancer extends Player implements Visitor, Visitable {
         r.setHp(r.getHp() - totalDamage);
     }
     /* Implements the fight between the current player and a Wizard */
-    public void visit(Wizard w) {
+    public void battle(Wizard w) {
         this.computeOvertimeDamage();
 
         float fireblastDamage = this.getBasicFireblastDamage();
@@ -175,8 +175,8 @@ public class Pyromancer extends Player implements Visitor, Visitable {
         w.setHp(w.getHp() - totalDamage);
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public void accept(Fighter v) {
+        v.battle(this);
     }
 
 }
