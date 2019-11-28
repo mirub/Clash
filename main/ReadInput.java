@@ -1,6 +1,7 @@
 package main;
 
 import fileio.FileSystem;
+import player.Player;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -57,5 +58,39 @@ public class ReadInput {
         }
 
         return new Input(n, m, ground, p, players, r, roundMoves);
+    }
+
+    public static void writeResult(ArrayList<Player> gamePlayers) {
+        try {
+            FileSystem fs = new FileSystem(inputFile, outputFile);
+
+            for (int i = 0; i < gamePlayers.size(); ++i) {
+                Player p = gamePlayers.get(i);
+                if (p.getStatus() == 1) {
+                    fs.writeCharacter(p.getType());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(p.getLevel());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(p.getXp());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(p.getHp());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(p.getCurrentX());
+                    fs.writeCharacter(' ');
+                    fs.writeInt(p.getCurrentY());
+                    fs.writeNewLine();
+                } else {
+                    fs.writeCharacter(p.getType());
+                    fs.writeCharacter(' ');
+                    fs.writeWord("dead");
+                    fs.writeNewLine();
+                }
+            }
+
+            fs.close();
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 }
