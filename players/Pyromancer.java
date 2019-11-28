@@ -6,29 +6,12 @@ import ground.BattleField;
 public class Pyromancer extends Player implements Fighter, Fought {
     public Pyromancer() {}
 
-    public Pyromancer(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y) {
-       super(id, initialHP, bonusHpLevel, g, x, y);
-    }
-
-    /* Computes the overtime damage */
-    public void computeOvertimeDamage() {
-        if (this.getIgniteDamage() > 0) {
-            this.setHp(this.getHp() - this.getIgniteDamage());
-            this.setIgniteDamageRound(this.getIgniteDamageRound() - 1);
-        }
-    }
-
-    // VEZI REMOVE OVERTIME DAMAGE DIN PLAYER
-
-    /* Checks if the player has won and increases its hp */
-    public void hasWon(Player p) {
-        if (p.getHp() == 0) {
-            int newHp = this.getXp() + Math.max(0, 200 - (this.getLevel() - p.getLevel()) * 40);
-            this.setHp(newHp);
-        }
+    public Pyromancer(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y, char c) {
+       super(id, initialHP, bonusHpLevel, g, x, y, c);
     }
 
     /* Increases the level if needed */
+    @Override
     public void increaseLevel(int level) {
         int levelHp = this.toLevelUp();
         // SEE HERE
@@ -37,8 +20,6 @@ public class Pyromancer extends Player implements Fighter, Fought {
             this.setLevel(this.getLevel() + 1);
         }
     }
-
-// IMPLEMENTEAZA VISIT GENERIC !!!!!! NU MERGE STAI
 
     /* Returns the basic fireblast damage */
     public float getBasicFireblastDamage () {
@@ -77,8 +58,13 @@ public class Pyromancer extends Player implements Fighter, Fought {
     }
 
     /* Implements the fight between the current player and a Pyromancer */
+    @Override
     public void battle(Pyromancer p) {
         this.computeOvertimeDamage();
+
+//        if (this.getStatus() == 0) {
+//            return;
+//        }
 
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
@@ -86,24 +72,48 @@ public class Pyromancer extends Player implements Fighter, Fought {
 
         p.removeOvertimeDamage();
 
-        fireblastDamage *= Constants.FIREBLAST_PYRO_PERCENT;
-        igniteDamage *= Constants.IGNITE_PYRO_PERCENT;
-        futureIgniteDamage *= Constants.IGNITE_PYRO_PERCENT;
-
         int fireblastDamageRounded = Math.round(fireblastDamage);
         int igniteDamageRounded = Math.round(igniteDamage);
         int futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-        p.setIgniteDamage(futureIgniteDamageRounded);
-        p.setIgniteDamageRound(2);
+        fireblastDamage *= Constants.FIREBLAST_PYRO_PERCENT;
+        igniteDamage *= Constants.IGNITE_PYRO_PERCENT;
+        futureIgniteDamage *= Constants.IGNITE_PYRO_PERCENT;
+
+        fireblastDamageRounded = Math.round(fireblastDamage);
+        igniteDamageRounded = Math.round(igniteDamage);
+        futureIgniteDamageRounded = Math.round(futureIgniteDamage);
+
+
+        System.out.println(fireblastDamage);
+        System.out.println(igniteDamage);
+        System.out.println(futureIgniteDamage);
+
+        p.setOvertimeDamage(futureIgniteDamageRounded);
+        p.setOvertimeDamageRound(2);
 
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         p.setHp(p.getHp() - totalDamage);
+        System.out.println(totalDamage);
+        System.out.println(p.getHp());
+        System.out.println();
+
+        p.setPreviousDamage(totalDamage);
+
+        if (p.getHp() <= 0) {
+            p.setStatus(0);
+            this.hasWon(p);
+        }
     }
 
     /* Implements the fight between the current player and a Knight */
+    @Override
     public void battle(Knight k) {
         this.computeOvertimeDamage();
+
+//        if (this.getStatus() == 0) {
+//            return;
+//        }
 
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
@@ -119,16 +129,28 @@ public class Pyromancer extends Player implements Fighter, Fought {
         int igniteDamageRounded = Math.round(igniteDamage);
         int futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-        k.setIgniteDamage(futureIgniteDamageRounded);
-        k.setIgniteDamageRound(2);
+        k.setOvertimeDamage(futureIgniteDamageRounded);
+        k.setOvertimeDamageRound(2);
 
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         k.setHp(k.getHp() - totalDamage);
+
+        k.setPreviousDamage(totalDamage);
+
+        if (k.getHp() <= 0) {
+            k.setStatus(0);
+            this.hasWon(k);
+        }
     }
 
     /* Implements the fight between the current player and a Rogue */
+    @Override
     public void battle(Rogue r) {
         this.computeOvertimeDamage();
+
+//        if (this.getStatus() == 0) {
+//            return;
+//        }
 
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
@@ -144,15 +166,28 @@ public class Pyromancer extends Player implements Fighter, Fought {
         int igniteDamageRounded = Math.round(igniteDamage);
         int futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-        r.setIgniteDamage(futureIgniteDamageRounded);
-        r.setIgniteDamageRound(2);
+        r.setOvertimeDamage(futureIgniteDamageRounded);
+        r.setOvertimeDamageRound(2);
 
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         r.setHp(r.getHp() - totalDamage);
+
+        r.setPreviousDamage(totalDamage);
+
+        if (r.getHp() <= 0) {
+            r.setStatus(0);
+            this.hasWon(r);
+        }
     }
+
     /* Implements the fight between the current player and a Wizard */
+    @Override
     public void battle(Wizard w) {
         this.computeOvertimeDamage();
+
+//        if (this.getStatus() == 0) {
+//            return;
+//        }
 
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
@@ -168,11 +203,18 @@ public class Pyromancer extends Player implements Fighter, Fought {
         int igniteDamageRounded = Math.round(igniteDamage);
         int futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-        w.setIgniteDamage(futureIgniteDamageRounded);
-        w.setIgniteDamageRound(2);
+        w.setOvertimeDamage(futureIgniteDamageRounded);
+        w.setOvertimeDamageRound(2);
 
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         w.setHp(w.getHp() - totalDamage);
+
+        w.setPreviousDamage(totalDamage);
+
+        if (w.getHp() <= 0) {
+            w.setStatus(0);
+            this.hasWon(w);
+        }
     }
 
     public void accept(Fighter v) {
