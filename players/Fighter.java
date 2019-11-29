@@ -1,9 +1,9 @@
 package player;
 
+/* The Visitor Pattern Visitor Interface */
 public interface Fighter {
-    // VISITOR
-    public void battle(Pyromancer p);
-    public void battle(Wizard w);
-    public void battle(Knight k);
-    public void battle(Rogue r);
+    void battle(Pyromancer p);
+    void battle(Wizard w);
+    void battle(Knight k);
+    void battle(Rogue r);
 }

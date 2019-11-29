@@ -1,6 +1,6 @@
 package player;
 
+/* The Visitor Pattern Visitable Interface*/
 public interface Fought {
-    // VISITABLE
-    public void accept(Fighter v);
+    void accept(Fighter v);
 }
