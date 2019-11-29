@@ -175,19 +175,11 @@ public class Rogue extends Player implements Fighter, Fought {
     }
 
     public void battle(Wizard w) {
-        //this.computeOvertimeDamage();
-
-//        if (this.getStatus() == 0) {
-//            return;
-//        }
 
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
 
         w.removeOvertimeDamage();
-
-        basicBackstabDamage *= Constants.BACKSTAB_WIZARD_PERCENT;
-        basicParalysisDamage *= Constants.PARALYSIS_WIZARD_PERCENT;
 
         if (this.getAttackCount() % 3 == 0 &&
                 this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
@@ -198,9 +190,16 @@ public class Rogue extends Player implements Fighter, Fought {
         int basicParalysisDamageRounded = Math.round(basicParalysisDamage);
 
         int totalDamage = basicBackstabDamageRounded + basicParalysisDamageRounded;
-        w.setHp(w.getHp() - totalDamage);
-
         w.setPreviousDamage(totalDamage);
+
+        basicBackstabDamage *= Constants.BACKSTAB_WIZARD_PERCENT;
+        basicParalysisDamage *= Constants.PARALYSIS_WIZARD_PERCENT;
+
+        basicBackstabDamageRounded = Math.round(basicBackstabDamage);
+        basicParalysisDamageRounded = Math.round(basicParalysisDamage);
+
+        totalDamage = basicBackstabDamageRounded + basicParalysisDamageRounded;
+        w.setHp(w.getHp() - totalDamage);
 
         w.setOvertimeDamage(basicParalysisDamageRounded);
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
