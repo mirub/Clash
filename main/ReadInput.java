@@ -17,7 +17,7 @@ public class ReadInput {
         this.outputFile = outputFile;
     }
 
-    /* returns a variable of type Input upon reading from a file */
+    /* Returns a variable of type Input upon reading from a file */
     public static Input load() {
         int n = 0;
         int m = 0;
@@ -62,7 +62,7 @@ public class ReadInput {
         return new Input(n, m, ground, p, players, positions, r, roundMoves);
     }
 
-    /* writes the result to a file */
+    /* Writes the result to a file */
     public static void writeResult(ArrayList<Player> gamePlayers) {
         try {
             FileSystem fs = new FileSystem(inputFile, outputFile);
