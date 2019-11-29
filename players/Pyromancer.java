@@ -13,12 +13,19 @@ public class Pyromancer extends Player implements Fighter, Fought {
     /* Increases the level if needed */
     @Override
     public void increaseLevel(int level) {
-        int levelHp = this.toLevelUp();
-        // SEE HERE
-        if (this.getHp() > levelHp) {
-            this.setHp(Constants.INITIAL_PYRO_HP + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
+        int ok = 0;
+        while (this.getXp() > this.toLevelUp()) {
             this.setLevel(this.getLevel() + 1);
+            ok = 1;
         }
+        if (ok == 1) {
+            this.setHp(Constants.INITIAL_PYRO_HP + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
+        }
+    }
+
+    @Override
+    public int getMaxHp() {
+        return (Constants.INITIAL_PYRO_HP + Constants.PYRO_HP_LEVEL_BONUS * this.getLevel());
     }
 
     /* Returns the basic fireblast damage */
@@ -60,7 +67,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
     /* Implements the fight between the current player and a Pyromancer */
     @Override
     public void battle(Pyromancer p) {
-        this.computeOvertimeDamage();
+        //this.computeOvertimeDamage();
 
 //        if (this.getStatus() == 0) {
 //            return;
@@ -84,19 +91,11 @@ public class Pyromancer extends Player implements Fighter, Fought {
         igniteDamageRounded = Math.round(igniteDamage);
         futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-
-        System.out.println(fireblastDamage);
-        System.out.println(igniteDamage);
-        System.out.println(futureIgniteDamage);
-
         p.setOvertimeDamage(futureIgniteDamageRounded);
         p.setOvertimeDamageRound(2);
 
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         p.setHp(p.getHp() - totalDamage);
-        System.out.println(totalDamage);
-        System.out.println(p.getHp());
-        System.out.println();
 
         p.setPreviousDamage(totalDamage);
 
@@ -109,7 +108,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
     /* Implements the fight between the current player and a Knight */
     @Override
     public void battle(Knight k) {
-        this.computeOvertimeDamage();
+        //this.computeOvertimeDamage();
 
 //        if (this.getStatus() == 0) {
 //            return;
@@ -146,7 +145,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
     /* Implements the fight between the current player and a Rogue */
     @Override
     public void battle(Rogue r) {
-        this.computeOvertimeDamage();
+        //this.computeOvertimeDamage();
 
 //        if (this.getStatus() == 0) {
 //            return;
@@ -183,7 +182,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
     /* Implements the fight between the current player and a Wizard */
     @Override
     public void battle(Wizard w) {
-        this.computeOvertimeDamage();
+        //this.computeOvertimeDamage();
 
 //        if (this.getStatus() == 0) {
 //            return;
