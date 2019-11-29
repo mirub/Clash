@@ -17,12 +17,14 @@ public class ReadInput {
         this.outputFile = outputFile;
     }
 
+    /* returns a variable of type Input upon reading from a file */
     public static Input load() {
         int n = 0;
         int m = 0;
         List<String> ground = new ArrayList<String>();
         int p = 0;
         List<String> players = new ArrayList<String>();
+        ArrayList<ArrayList<Integer>> positions = new ArrayList<ArrayList<Integer>>();
         int r = 0;
         List<String> roundMoves = new ArrayList<String>();
         try {
@@ -38,11 +40,11 @@ public class ReadInput {
             p = fs.nextInt();
 
             for (int i = 0; i < p; ++i) {
-                String currentPlayer = "";
-                for (int j = 0; j < 3; ++j) {
-                    currentPlayer += fs.nextWord();
-                }
-                players.add(currentPlayer);
+                ArrayList<Integer> currentPosition = new ArrayList<Integer>(2);
+                players.add(fs.nextWord());
+                currentPosition.add(fs.nextInt());
+                currentPosition.add(fs.nextInt());
+                positions.add(currentPosition);
             }
 
             r = fs.nextInt();
@@ -57,9 +59,10 @@ public class ReadInput {
             e1.printStackTrace();
         }
 
-        return new Input(n, m, ground, p, players, r, roundMoves);
+        return new Input(n, m, ground, p, players, positions, r, roundMoves);
     }
 
+    /* writes the result to a file */
     public static void writeResult(ArrayList<Player> gamePlayers) {
         try {
             FileSystem fs = new FileSystem(inputFile, outputFile);
