@@ -9,6 +9,7 @@ public class Input {
     private List<String> ground = new ArrayList<String>(n);
     private  int p; // number of players
     private List<String> players = new ArrayList<String>(p);
+    private ArrayList<ArrayList<Integer>> positions = new ArrayList<ArrayList<Integer>>(p);
     private int r; // rounds number
     private List<String> roundMoves = new ArrayList<String>(r);
 
@@ -23,9 +24,10 @@ public class Input {
     }
 
     public Input (int n, int m, List<String> ground, int p, List<String> players,
-                  int r, List<String> roundMoves) {
+                  ArrayList<ArrayList<Integer>> positions, int r, List<String> roundMoves) {
         this.ground = ground;
         this.players = players;
+        this.positions = positions;
         this.roundMoves = roundMoves;
         this.n = n;
         this.m = m;
@@ -53,6 +55,14 @@ public class Input {
         return players;
     }
 
+    public ArrayList<ArrayList<Integer>> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(ArrayList<ArrayList<Integer>> positions) {
+        this.positions = positions;
+    }
+
     public int getR() {
         return r;
     }
@@ -66,9 +76,10 @@ public class Input {
         boolean groundNotEmpty = ground.size() > 0;
         boolean play = p != 0;
         boolean playersNotEmpty = players.size() > 0;
+        boolean positionsNotEmpty = positions.size() > 0;
         boolean rounds = r != 0;
         boolean roundsNotEmpty = roundMoves.size() > 0;
         return size && groundNotEmpty && play && playersNotEmpty &&
-                rounds && roundsNotEmpty;
+                rounds && roundsNotEmpty && positionsNotEmpty;
     }
 }
