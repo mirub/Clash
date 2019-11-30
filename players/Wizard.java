@@ -6,25 +6,17 @@ import ground.BattleField;
 import static java.util.Collections.min;
 
 public class Wizard extends Player implements Fighter, Fought {
-    int damageReceived;
     public Wizard() {}
 
     public Wizard(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y, char c) {
         super(id, initialHP, bonusHpLevel, g, x, y, c);
     }
 
-    public int getDamageReceived() {
-        return damageReceived;
-    }
-
-    public void setDamageReceived(int damageReceived) {
-        this.damageReceived = damageReceived;
-    }
-
+    /* Increases the level of the current player */
     @Override
     public void increaseLevel(int level) {
         int ok = 0;
-        while (this.getXp() > this.toLevelUp()) {
+        while (this.getXp() >= this.toLevelUp()) {
             this.setLevel(this.getLevel() + 1);
             ok = 1;
         }
@@ -33,12 +25,13 @@ public class Wizard extends Player implements Fighter, Fought {
         }
     }
 
+    /* Returns the max hp per level of the current player */
     @Override
     public int getMaxHp() {
         return (Constants.INITIAL_WIZARD_HP + Constants.WIZARD_HP_LEVEL_BONUS * this.getLevel());
     }
 
-    /* Returns the basic drain damage */
+    /* Returns the basic drain damage percent */
     public float getBasicDrainDamage () {
         float drainDamagePercent = Constants.DRAIN_DAMAGE_PERCENT +
                 Constants.DRAIN_DAMAGE_PERCENT_BONUS * this.getLevel();
@@ -50,13 +43,13 @@ public class Wizard extends Player implements Fighter, Fought {
         return drainDamagePercent;
     }
 
-    /* Returns the basic slam damage */
+    /* Returns the basic slam damage percent */
     public float getBasicDeflectDamage () {
         float deflectDamagePercent = Constants.DEFLECT_DAMAGE_PERCENT +
                 Constants.DEFLECT_DAMAGE_LEVEL_BONUS * this.getLevel();
 
-        if (deflectDamagePercent > 0.7f) {
-            deflectDamagePercent = 0.7f;
+        if (deflectDamagePercent > Constants.WIZARD_MAX_DEFLECT_PERCENT) {
+            deflectDamagePercent = Constants.WIZARD_MAX_DEFLECT_PERCENT;
         }
 
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'D') {
@@ -66,10 +59,12 @@ public class Wizard extends Player implements Fighter, Fought {
         return deflectDamagePercent;
     }
 
+    /* Returns the basic drain damage */
     public float getDrainDamage(Player p) {
-        return Math.min(0.3f * p.getMaxHp(), p.getHp());
+        return Math.min(Constants.WIZARD_DRAIN_PERCENT * p.getMaxHp(), p.getHp());
     }
 
+    /* Implements the battle between a Wizard and a Pyromancer */
     public void battle(Pyromancer p) {
         float drainDamagePercent = this.getBasicDrainDamage();
         float deflectDamagePercent = this.getBasicDeflectDamage();
@@ -85,7 +80,6 @@ public class Wizard extends Player implements Fighter, Fought {
 
         int totalDamage = basicDrainDamageRounded + deflectDamageRounded;
         p.setHp(p.getHp() - totalDamage);
-
         p.setPreviousDamage(totalDamage);
 
         if (p.getHp() <= 0) {
@@ -94,6 +88,7 @@ public class Wizard extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the battle between a Wizard and a Knight */
     public void battle(Knight k) {
         float drainDamagePercent = this.getBasicDrainDamage();
         float deflectDamagePercent = this.getBasicDeflectDamage();
@@ -107,10 +102,8 @@ public class Wizard extends Player implements Fighter, Fought {
         int basicDrainDamageRounded = Math.round(basicDrainDamage);
         int deflectDamageRounded = Math.round(deflectDamage);
 
-
         int totalDamage = basicDrainDamageRounded + deflectDamageRounded;
         k.setHp(k.getHp() - totalDamage);
-
         k.setPreviousDamage(totalDamage);
 
         if (k.getHp() <= 0) {
@@ -119,8 +112,8 @@ public class Wizard extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the fight between a Wizard and a Rogue */
     public void battle(Rogue r) {
-
         float drainDamagePercent = this.getBasicDrainDamage();
         float deflectDamagePercent = this.getBasicDeflectDamage();
 
@@ -133,10 +126,8 @@ public class Wizard extends Player implements Fighter, Fought {
         int basicDrainDamageRounded = Math.round(basicDrainDamage);
         int deflectDamageRounded = Math.round(deflectDamage);
 
-
         int totalDamage = basicDrainDamageRounded + deflectDamageRounded;
         r.setHp(r.getHp() - totalDamage);
-
         r.setPreviousDamage(totalDamage);
 
         if (r.getHp() <= 0) {
@@ -145,13 +136,8 @@ public class Wizard extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the fight between two Wizards */
     public void battle(Wizard w) {
-        //this.computeOvertimeDamage();
-
-//        if (this.getStatus() == 0) {
-//            return;
-//        }
-
         float drainDamagePercent = this.getBasicDrainDamage();
         float deflectDamagePercent = this.getBasicDeflectDamage();
 
@@ -163,10 +149,8 @@ public class Wizard extends Player implements Fighter, Fought {
         int basicDrainDamageRounded = Math.round(basicDrainDamage);
         int deflectDamageRounded = Math.round(deflectDamage);
 
-
         int totalDamage = basicDrainDamageRounded + deflectDamageRounded;
         w.setHp(w.getHp() - totalDamage);
-
         w.setPreviousDamage(totalDamage);
 
         if (w.getHp() <= 0) {

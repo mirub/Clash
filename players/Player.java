@@ -17,9 +17,8 @@ public abstract class Player implements Fighter, Fought {
     private int overtimeDamage;
     private int overtimeDamageRound;
     private int canMove = 1;
-    private int hasFought;
+    private int immobilityRound = 0;
     private char type;
-    private int currentRound;
     private int attackCount;
 
 
@@ -39,7 +38,7 @@ public abstract class Player implements Fighter, Fought {
         this.overtimeDamage = 0;
         this.overtimeDamageRound = 0;
         this.canMove = 1;
-        this.hasFought = 0;
+        this.immobilityRound = 0;
         this.previousDamage = 0;
         this.type = c;
         this.attackCount = 0;
@@ -53,15 +52,15 @@ public abstract class Player implements Fighter, Fought {
 
     public abstract int getMaxHp();
 
-    /* Removes any ovetime damage */
+    /* Removes any overtime damage */
     public void removeOvertimeDamage() {
-        if (this.getOvertimeDamage() > 0) {
+        if (this.getOvertimeDamage() > 0 && getOvertimeDamageRound() > 0) {
             this.setOvertimeDamage(0);
             this.setOvertimeDamageRound(0);
         }
 
         if (this.getCanMove() == 0) {
-            this.canMove = 1;
+            this.setCanMove(1);
         }
     }
 
@@ -93,20 +92,20 @@ public abstract class Player implements Fighter, Fought {
 
     public abstract void accept(Fighter f);
 
+    public int getImmobilityRound() {
+        return immobilityRound;
+    }
+
+    public void setImmobilityRound(int immobilityRound) {
+        this.immobilityRound = immobilityRound;
+    }
+
     public int getAttackCount() {
         return attackCount;
     }
 
     public void setAttackCount(int attackCount) {
         this.attackCount = attackCount;
-    }
-
-    public int getCurrentRound() {
-        return currentRound;
-    }
-
-    public void setCurrentRound(int currentRound) {
-        this.currentRound = currentRound;
     }
 
     public char getType() {
@@ -143,14 +142,6 @@ public abstract class Player implements Fighter, Fought {
 
     public void setPreviousDamage(int previousDamage) {
         this.previousDamage = previousDamage;
-    }
-
-    public int getHasFought() {
-        return hasFought;
-    }
-
-    public void setHasFought(int hasFought) {
-        this.hasFought = hasFought;
     }
 
     public void setInitialHp(int initialHp) {

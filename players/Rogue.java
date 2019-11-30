@@ -10,10 +10,11 @@ public class Rogue extends Player implements Fighter, Fought {
         super(id, initialHP, bonusHpLevel, g, x, y, c);
     }
 
+    /* Increases the level of the current player */
     @Override
     public void increaseLevel(int level) {
         int ok = 0;
-        while (this.getXp() > this.toLevelUp()) {
+        while (this.getXp() >= this.toLevelUp()) {
             this.setLevel(this.getLevel() + 1);
             ok = 1;
         }
@@ -22,6 +23,7 @@ public class Rogue extends Player implements Fighter, Fought {
         }
     }
 
+    /* Returns the maximum hp per level of the current player */
     @Override
     public int getMaxHp() {
         return (Constants.INITIAL_ROGUE_HP + Constants.ROGUE_HP_LEVEL_BONUS * this.getLevel());
@@ -51,9 +53,8 @@ public class Rogue extends Player implements Fighter, Fought {
         return paralysisDamage;
     }
 
+    /* Implements the battle between a Rogue and a Pyromancer*/
     public void battle(Pyromancer p) {
-        //this.computeOvertimeDamage();
-
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
 
@@ -72,16 +73,16 @@ public class Rogue extends Player implements Fighter, Fought {
 
         int totalDamage = basicBackstabDamageRounded + basicParalysisDamageRounded;
         p.setHp(p.getHp() - totalDamage);
-        System.out.println(p.getHp());
-
         p.setPreviousDamage(totalDamage);
 
         p.setOvertimeDamage(basicParalysisDamageRounded);
 
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
+            p.setImmobilityRound(6);
             p.setOvertimeDamageRound(6);
             p.setCanMove(0);
         } else {
+            p.setImmobilityRound(3);
             p.setOvertimeDamageRound(3);
             p.setCanMove(0);
         }
@@ -92,8 +93,8 @@ public class Rogue extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the fight between a Rogue and a Knight */
     public void battle(Knight k) {
-
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
 
@@ -109,20 +110,18 @@ public class Rogue extends Player implements Fighter, Fought {
         int basicParalysisDamageRounded = Math.round(basicParalysisDamage);
 
         int totalDamage = basicBackstabDamageRounded + basicParalysisDamageRounded;
-        System.out.println(this.getType() + " " + totalDamage + " " + k.getType());
-
         k.setHp(k.getHp() - totalDamage);
-
-        k.removeOvertimeDamage();
-
         k.setPreviousDamage(totalDamage);
+        k.removeOvertimeDamage();
 
         k.setOvertimeDamage(basicParalysisDamageRounded);
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
+            k.setImmobilityRound(6);
             k.setOvertimeDamageRound(6);
             k.setCanMove(0);
         } else {
             k.setOvertimeDamageRound(3);
+            k.setImmobilityRound(3);
             k.setCanMove(0);
         }
 
@@ -132,12 +131,8 @@ public class Rogue extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the fight between two Rogues */
     public void battle(Rogue r) {
-        //this.computeOvertimeDamage();
-
-//        if (this.getStatus() == 0) {
-//            return;
-//        }
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
 
@@ -161,10 +156,12 @@ public class Rogue extends Player implements Fighter, Fought {
 
         r.setOvertimeDamage(basicParalysisDamageRounded);
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
+            r.setImmobilityRound(6);
             r.setOvertimeDamageRound(6);
             r.setCanMove(0);
         } else {
-            r.setOvertimeDamageRound(3);
+            r.setImmobilityRound(3);
+            r.setOvertimeDamageRound(6);
             r.setCanMove(0);
         }
 
@@ -174,12 +171,12 @@ public class Rogue extends Player implements Fighter, Fought {
         }
     }
 
+    /* Implements the fight between a Rogue and a Wizard*/
     public void battle(Wizard w) {
+        w.removeOvertimeDamage();
 
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
-
-        w.removeOvertimeDamage();
 
         if (this.getAttackCount() % 3 == 0 &&
                 this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
@@ -203,9 +200,11 @@ public class Rogue extends Player implements Fighter, Fought {
 
         w.setOvertimeDamage(basicParalysisDamageRounded);
         if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'W') {
+            w.setImmobilityRound(6);
             w.setOvertimeDamageRound(6);
             w.setCanMove(0);
         } else {
+            w.setImmobilityRound(3);
             w.setOvertimeDamageRound(3);
             w.setCanMove(0);
         }
