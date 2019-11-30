@@ -45,6 +45,10 @@ public class Constants {
 
     public static final float KNIGHT_LAND_PERCENT = 1.15f;
 
+    public static final float MAX_KNIGHT_HP_LIMIT = 0.4f;
+    public static final float KNIGHT_OPPONENT_PERCENT_HP = 0.2f;
+    public static final float OPPONENT_HP_MULTIPLIER = 0.01f;
+
     // Wizard constants:
 
     public static final int INITIAL_WIZARD_HP = 400;
@@ -66,6 +70,9 @@ public class Constants {
 
     public static final float WIZARD_DESERT_PERCENT = 1.10f;
 
+    public static final float WIZARD_MAX_DEFLECT_PERCENT = 0.7f;
+    public static final float WIZARD_DRAIN_PERCENT = 0.3f;
+
     // Rogue constants:
 
     public static final int INITIAL_ROGUE_HP = 600;
@@ -78,7 +85,7 @@ public class Constants {
     public static final float BACKSTAB_PYRO_PERCENT = 1.25f;
     public static final float BACKSTAB_WIZARD_PERCENT = 1.25f;
 
-    public static final float PARALYSIS_DAMAGE_PERCENT = 0.9f;
+    public static final float PARALYSIS_DAMAGE = 40f;
     public static final float PARALYSIS_DAMAGE_LEVEL_BONUS = 10f;
     public static final float PARALYSIS_ROGUE_PERCENT = 0.9f;
     public static final float PARALYSIS_KNIGHT_PERCENT = 0.8f;
