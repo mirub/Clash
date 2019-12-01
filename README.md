@@ -1,9 +1,11 @@
 # LeagueOfOOP - Stage 1
 
 Student: Banu Miruna Elena
+
 Group: 321CA
 
 Project description:
+  
   
   This project implements a MMO-style game which sees a number of players
 that move in a 2D Universe and fight eachother for a number of rounds and, in
@@ -21,12 +23,15 @@ the prior rounds (in case that player had the ability to do so).
 
 Concepts used in the implementation of the problem:
 
+
 - The Singleton Pattern: needing just one instance of the following classes,
 			 this pattern is used for: BattleField, PlayGame,
 			 ReadInput, PlayerFactory;
+			 
 
 - The Factory Pattern: to generate the player types without exposing the
 		       creation logic, this pattern is used for PlayerFactory;
+
 
 - Double Dispatch: to ease the interaction between the players during the
 		   fights, the Double Dispatch concept has been implemented
