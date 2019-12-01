@@ -23,6 +23,10 @@ Down, Left, Right (or '_' if they remain in their current position). However,
 their mobility could be altered depending on the player that hit them in one of
 the prior rounds (in case that player had the ability to do so).
 
+   If two players land on the same coordinates, they fight eachother, damaging
+the opponent with both their hits. However, if any of the two players dies due
+to the overtime damage caused by a prior hit, the fight does not happen anymore.
+
  Concepts used in the implementation of the problem:
 
 
