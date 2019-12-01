@@ -11,12 +11,14 @@ Project description:
 that move in a 2D Universe and fight eachother for a number of rounds and, in
 the end, prints the state of the players along with their HP, XP and placement
 on the map.
-    Each of the players has one of the 4 types: Pyromancer, Rogue, Wizard or
+
+   Each of the players has one of the 4 types: Pyromancer, Rogue, Wizard or
 Knight. These 4 races of players have 2 types of damage hits that change their
 intensity depending on the race they are applied to. Also, every player has a
 preferred land type that boosts their abilities: Pyromancer - Volcanic, Knight -
 Land, Wizard - Desert, Rogue - Woods.
-    The players can move (or not) each round in one of the four directions: Up,
+   
+   The players can move (or not) each round in one of the four directions: Up,
 Down, Left, Right (or '_' if they remain in their current position). However,
 their mobility could be altered depending on the player that hit them in one of
 the prior rounds (in case that player had the ability to do so).
