@@ -1,7 +1,17 @@
+/* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package constants;
 
-public class Constants {
-    // Pyromancer constants:
+public final class Constants {
+    private Constants() { }
+
+    /* Player constants: */
+
+    public static final int STANDARD_LEVEL_XP = 250;
+    public static final int BONUS_LEVEL_XP = 50;
+    public static final int MAX_WINNER_HP = 200;
+    public static final int WINNER_HP_MULTIPLIER = 40;
+
+    /* Pyromancer constants: */
 
     public static final int INITIAL_PYRO_HP = 500;
     public static final int PYRO_HP_LEVEL_BONUS = 50;
@@ -24,7 +34,7 @@ public class Constants {
 
     public static final float PYRO_VOLCANIC_PERCENT = 1.25f;
 
-    // Knight constants:
+    /* Knight constants: */
 
     public static final int INITIAL_KNIGHT_HP = 900;
     public static final int KNIGHT_HP_LEVEL_BONUS = 80;
@@ -49,7 +59,7 @@ public class Constants {
     public static final float KNIGHT_OPPONENT_PERCENT_HP = 0.2f;
     public static final float OPPONENT_HP_MULTIPLIER = 0.01f;
 
-    // Wizard constants:
+    /* Wizard constants: */
 
     public static final int INITIAL_WIZARD_HP = 400;
     public static final int WIZARD_HP_LEVEL_BONUS = 30;
@@ -73,7 +83,7 @@ public class Constants {
     public static final float WIZARD_MAX_DEFLECT_PERCENT = 0.7f;
     public static final float WIZARD_DRAIN_PERCENT = 0.3f;
 
-    // Rogue constants:
+    /* Rogue constants: */
 
     public static final int INITIAL_ROGUE_HP = 600;
     public static final int ROGUE_HP_LEVEL_BONUS = 40;
@@ -92,7 +102,11 @@ public class Constants {
     public static final float PARALYSIS_PYRO_PERCENT = 1.2f;
     public static final float PARALYSIS_WIZARD_PERCENT = 1.25f;
 
-    public static final float ROGUE_WOODS_PERCENT = 1.15f;
+    public static final int STANDARD_IMMOBILITY_ROUNDS = 3;
+    public static final int WOODS_IMMOBILITY_ROUNDS = 6;
+    public static final int ROUND_NUMBER_BONUS = 3;
+    public static final float WOODS_DAMAGE_MULTIPLIER = 1.5f;
 
+    public static final float ROGUE_WOODS_PERCENT = 1.15f;
 
 }
