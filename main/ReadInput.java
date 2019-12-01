@@ -1,24 +1,33 @@
+/* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package main;
 
 import fileio.FileSystem;
 import player.Player;
-
-import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadInput {
-    private static String inputFile;
-    private static String outputFile;
+public final class ReadInput {
+    private static String inFile;
+    private static String outFile;
+    private static ReadInput instance = null;
 
-    public ReadInput(String inputFile, String outputFile) {
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
+
+    public static ReadInput getInstance(final String inputFile,
+                                        final String outputFile) {
+        if (instance == null) {
+            instance = new ReadInput(inputFile, outputFile);
+        }
+        return instance;
+    }
+
+
+    private ReadInput(final String inputFile, final String outputFile) {
+        this.inFile = inputFile;
+        this.outFile = outputFile;
     }
 
     /* Returns a variable of type Input upon reading from a file */
-    public static Input load() {
+    public static GameInput load() {
         int n = 0;
         int m = 0;
         List<String> ground = new ArrayList<String>();
@@ -28,7 +37,7 @@ public class ReadInput {
         int r = 0;
         List<String> roundMoves = new ArrayList<String>();
         try {
-            FileSystem fs = new FileSystem(inputFile, outputFile);
+            FileSystem fs = new FileSystem(inFile, outFile);
 
             n = fs.nextInt();
             m = fs.nextInt();
@@ -49,7 +58,7 @@ public class ReadInput {
 
             r = fs.nextInt();
 
-            for (int i = 0; i < r ; ++i) {
+            for (int i = 0; i < r; ++i) {
                 roundMoves.add(fs.nextWord());
             }
 
@@ -59,13 +68,13 @@ public class ReadInput {
             e1.printStackTrace();
         }
 
-        return new Input(n, m, ground, p, players, positions, r, roundMoves);
+        return new GameInput(n, m, ground, p, players, positions, r, roundMoves);
     }
 
     /* Writes the result to a file */
-    public static void writeResult(ArrayList<Player> gamePlayers) {
+    public static void writeResult(final ArrayList<Player> gamePlayers) {
         try {
-            FileSystem fs = new FileSystem(inputFile, outputFile);
+            FileSystem fs = new FileSystem(inFile, outFile);
 
             for (int i = 0; i < gamePlayers.size(); ++i) {
                 Player p = gamePlayers.get(i);
