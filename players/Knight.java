@@ -1,40 +1,45 @@
+/* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package player;
 
 import constants.Constants;
 import ground.BattleField;
 
-public class Knight extends Player implements Fighter, Fought {
-    public Knight() {}
+public final class Knight extends Player implements Fighter, Fought {
+    public Knight() { }
 
-    public Knight(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y, char c) {
+    public Knight(final int id, final int initialHP, final int bonusHpLevel,
+                  final BattleField g, final int x, final int y, final char c) {
         super(id, initialHP, bonusHpLevel, g, x, y, c);
     }
 
     /* Increases the level if needed */
     @Override
-    public void increaseLevel(int level) {
+    public void increaseLevel(final int level) {
         int ok = 0;
         while (this.getXp() >= this.toLevelUp()) {
             this.setLevel(this.getLevel() + 1);
             ok = 1;
         }
         if (ok == 1) {
-            this.setHp(Constants.INITIAL_KNIGHT_HP + this.getLevel() * Constants.KNIGHT_HP_LEVEL_BONUS);
+            this.setHp(Constants.INITIAL_KNIGHT_HP + this.getLevel()
+                    * Constants.KNIGHT_HP_LEVEL_BONUS);
         }
     }
 
     /* Returns the maximum hp per level of the current player */
     @Override
     public int getMaxHp() {
-        return (Constants.INITIAL_KNIGHT_HP + Constants.KNIGHT_HP_LEVEL_BONUS * this.getLevel());
+        return (Constants.INITIAL_KNIGHT_HP
+                + Constants.KNIGHT_HP_LEVEL_BONUS * this.getLevel());
     }
 
     /* Returns the basic execute damage */
-    public float getBasicExecuteDamage () {
-        float executeDamage = Constants.EXECUTE_DAMAGE +
-                Constants.EXECUTE_DAMAGE_BONUS * this.getLevel();
+    public float getBasicExecuteDamage() {
+        float executeDamage = Constants.EXECUTE_DAMAGE
+                + Constants.EXECUTE_DAMAGE_BONUS * this.getLevel();
 
-        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'L') {
+        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
+                == 'L') {
             executeDamage *= Constants.KNIGHT_LAND_PERCENT;
         }
 
@@ -42,11 +47,12 @@ public class Knight extends Player implements Fighter, Fought {
     }
 
     /* Returns the basic slam damage */
-    public float getBasicSlamDamage () {
-        float slamDamage = Constants.SLAM_DAMAGE +
-                Constants.SLAM_DAMAGE_LEVEL_BONUS * this.getLevel();
+    public float getBasicSlamDamage() {
+        float slamDamage = Constants.SLAM_DAMAGE
+                + Constants.SLAM_DAMAGE_LEVEL_BONUS * this.getLevel();
 
-        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'L') {
+        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
+                == 'L') {
             slamDamage *= Constants.KNIGHT_LAND_PERCENT;
         }
 
@@ -54,9 +60,9 @@ public class Knight extends Player implements Fighter, Fought {
     }
 
     /* Computes the Hp limit for the player p*/
-    int computeHpLimit(Player p) {
-        float hpLimit = Constants.KNIGHT_OPPONENT_PERCENT_HP * p.getMaxHp() +
-                Constants.OPPONENT_HP_MULTIPLIER * this.getLevel() * p.getMaxHp();
+    int computeHpLimit(final Player p) {
+        float hpLimit = Constants.KNIGHT_OPPONENT_PERCENT_HP * p.getMaxHp()
+                + Constants.OPPONENT_HP_MULTIPLIER * this.getLevel() * p.getMaxHp();
 
         if (hpLimit > Constants.MAX_KNIGHT_HP_LIMIT * p.getMaxHp()) {
             hpLimit = Constants.MAX_KNIGHT_HP_LIMIT * p.getMaxHp();
@@ -67,7 +73,7 @@ public class Knight extends Player implements Fighter, Fought {
 
     /* Implements the battle between a Knight and a Pyromancer */
     @Override
-    public void battle(Pyromancer p) {
+    public void battle(final Pyromancer p) {
         int hpLimit = this.computeHpLimit(p);
         if (p.getHp() < hpLimit) {
             p.setPreviousDamage(p.getHp());
@@ -101,7 +107,7 @@ public class Knight extends Player implements Fighter, Fought {
 
     /* Implements the battle between two Knights*/
     @Override
-    public void battle(Knight k) {
+    public void battle(final Knight k) {
         int hpLimit = this.computeHpLimit(k);
 
         if (k.getHp() < hpLimit) {
@@ -137,7 +143,7 @@ public class Knight extends Player implements Fighter, Fought {
 
     /* Implements the battle between a Knight and a Rogue */
     @Override
-    public void battle(Rogue r) {
+    public void battle(final Rogue r) {
         int hpLimit = this.computeHpLimit(r);
 
         if (r.getHp() < hpLimit) {
@@ -172,7 +178,7 @@ public class Knight extends Player implements Fighter, Fought {
 
     /* Implements the battle between a Knight and a Wizard */
     @Override
-    public void battle(Wizard w) {
+    public void battle(final Wizard w) {
         w.removeOvertimeDamage();
         int hpLimit = this.computeHpLimit(w);
 
@@ -208,8 +214,8 @@ public class Knight extends Player implements Fighter, Fought {
         }
     }
 
-    public void accept(Fighter v) {
+    /* Accepts the fight from fighter "v" */
+    public void accept(final Fighter v) {
         v.battle(this);
     }
-
 }

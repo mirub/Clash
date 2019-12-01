@@ -1,25 +1,28 @@
+/* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package player;
 
 import constants.Constants;
 import ground.BattleField;
 
-public class Pyromancer extends Player implements Fighter, Fought {
-    public Pyromancer() {}
+public final class Pyromancer extends Player implements Fighter, Fought {
+    public Pyromancer() { }
 
-    public Pyromancer(int id, int initialHP, int bonusHpLevel, BattleField g, int x, int y, char c) {
+    public Pyromancer(final int id, final int initialHP, final int bonusHpLevel,
+                      final BattleField g, final int x, final int y, final char c) {
        super(id, initialHP, bonusHpLevel, g, x, y, c);
     }
 
     /* Increases the level if needed */
     @Override
-    public void increaseLevel(int level) {
+    public void increaseLevel(final int level) {
         int ok = 0;
         while (this.getXp() >= this.toLevelUp()) {
             this.setLevel(this.getLevel() + 1);
             ok = 1;
         }
         if (ok == 1) {
-            this.setHp(Constants.INITIAL_PYRO_HP + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
+            this.setHp(Constants.INITIAL_PYRO_HP
+                    + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
         }
     }
 
@@ -30,11 +33,12 @@ public class Pyromancer extends Player implements Fighter, Fought {
     }
 
     /* Returns the basic fireblast damage */
-    public float getBasicFireblastDamage () {
-        float fireblastDamage = Constants.FIREBLAST_DAMAGE +
-                Constants.FIREBLAST_DAMAGE_BONUS * this.getLevel();
+    public float getBasicFireblastDamage() {
+        float fireblastDamage = Constants.FIREBLAST_DAMAGE
+                + Constants.FIREBLAST_DAMAGE_BONUS * this.getLevel();
 
-        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'V') {
+        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
+                == 'V') {
             fireblastDamage *= Constants.PYRO_VOLCANIC_PERCENT;
         }
 
@@ -42,11 +46,12 @@ public class Pyromancer extends Player implements Fighter, Fought {
     }
 
     /* Returns the basic ignite damage */
-    public float getBasicIgniteDamage () {
-        float igniteDamage = Constants.IGNITE_DAMAGE_FIRST +
-                Constants.IGNITE_DAMAGE_FIRST_LEVEL_BONUS * this.getLevel();
+    public float getBasicIgniteDamage() {
+        float igniteDamage = Constants.IGNITE_DAMAGE_FIRST
+                + Constants.IGNITE_DAMAGE_FIRST_LEVEL_BONUS * this.getLevel();
 
-        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'V') {
+        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
+                == 'V') {
             igniteDamage *= Constants.PYRO_VOLCANIC_PERCENT;
         }
 
@@ -54,11 +59,12 @@ public class Pyromancer extends Player implements Fighter, Fought {
     }
 
     /* Returns the basic future ignite damage */
-    public float getBasicFutureIgniteDamage () {
-        float futureIgniteDamage = Constants.IGNITE_DAMAGE +
-                Constants.IGNITE_DAMAGE_LEVEL_BONUS * this.getLevel();
+    public float getBasicFutureIgniteDamage() {
+        float futureIgniteDamage = Constants.IGNITE_DAMAGE
+                + Constants.IGNITE_DAMAGE_LEVEL_BONUS * this.getLevel();
 
-        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY()) == 'V') {
+        if (this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
+                == 'V') {
             futureIgniteDamage *= Constants.PYRO_VOLCANIC_PERCENT;
         }
 
@@ -67,7 +73,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
 
     /* Implements the fight between two Pyromancers */
     @Override
-    public void battle(Pyromancer p) {
+    public void battle(final Pyromancer p) {
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
         float futureIgniteDamage = this.getBasicFutureIgniteDamage();
@@ -102,7 +108,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
 
     /* Implements the fight between a Pyromancer and a Knight */
     @Override
-    public void battle(Knight k) {
+    public void battle(final Knight k) {
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
         float futureIgniteDamage = this.getBasicFutureIgniteDamage();
@@ -133,7 +139,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
 
     /* Implements the fight between a Pyromancer and a Rogue */
     @Override
-    public void battle(Rogue r) {
+    public void battle(final Rogue r) {
         float fireblastDamage = this.getBasicFireblastDamage();
         float igniteDamage = this.getBasicIgniteDamage();
         float futureIgniteDamage = this.getBasicFutureIgniteDamage();
@@ -164,7 +170,7 @@ public class Pyromancer extends Player implements Fighter, Fought {
 
     /* Implements the fight between a Pyromancer and a Wizard */
     @Override
-    public void battle(Wizard w) {
+    public void battle(final Wizard w) {
         w.removeOvertimeDamage();
 
         float fireblastDamage = this.getBasicFireblastDamage();
@@ -197,8 +203,8 @@ public class Pyromancer extends Player implements Fighter, Fought {
         }
     }
 
-    public void accept(Fighter v) {
+    /* Accepts the fight from fighter "v" */
+    public void accept(final Fighter v) {
         v.battle(this);
     }
-
 }

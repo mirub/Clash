@@ -1,11 +1,12 @@
+/* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package player;
 
 import ground.BattleField;
 
-public class PlayerFactory {
+public final class PlayerFactory {
     private static PlayerFactory instance = null;
 
-    private PlayerFactory() {}
+    private PlayerFactory() { }
 
     public static PlayerFactory getInstance() {
         if (instance == null) {
@@ -14,8 +15,9 @@ public class PlayerFactory {
         return instance;
     }
 
-    public Player getPlayerType (PlayerType type, int id, int initialHP, int bonusHpLevel,
-                                 BattleField g, int x, int y, char c) {
+    public Player getPlayerType(final PlayerType type, final int id, final int initialHP,
+                                final int bonusHpLevel, final BattleField g, final int x,
+                                final int y, final char c) {
         switch (type) {
             case PYRO:
                 return new Pyromancer(id, initialHP, bonusHpLevel, g, x, y, c);
