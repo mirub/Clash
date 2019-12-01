@@ -4,8 +4,8 @@ Student: Banu Miruna Elena
 Group: 321CA
 
 Project description:
-
-    This project implements a MMO-style game which sees a number of players
+  
+  This project implements a MMO-style game which sees a number of players
 that move in a 2D Universe and fight eachother for a number of rounds and, in
 the end, prints the state of the players along with their HP, XP and placement
 on the map.
