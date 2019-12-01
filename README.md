@@ -4,7 +4,7 @@ Student: Banu Miruna Elena
 
 Group: 321CA
 
-Project description:
+* Project description:
   
   
   This project implements a MMO-style game which sees a number of players
@@ -23,7 +23,7 @@ Down, Left, Right (or '_' if they remain in their current position). However,
 their mobility could be altered depending on the player that hit them in one of
 the prior rounds (in case that player had the ability to do so).
 
-Concepts used in the implementation of the problem:
+ * Concepts used in the implementation of the problem:
 
 
 - The Singleton Pattern: needing just one instance of the following classes,
