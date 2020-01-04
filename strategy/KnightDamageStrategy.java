@@ -1,11 +1,12 @@
 package strategy;
 
 import constants.Constants;
-import player.*;
+import player.Player;
 
 public class KnightDamageStrategy implements Strategy {
     @Override
-    public void doOperation(Player k) {
+    /* Damage strategy for knight */
+    public void doOperation(final Player k) {
         /* Changes the modifiers */
         k.setExecuteRoguePercent(k.getExecuteRoguePercent()
                 + Constants.KNIGHT_DMG_COEF_RAISE);

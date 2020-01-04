@@ -1,11 +1,12 @@
 package strategy;
 
 import constants.Constants;
-import player.*;
+import player.Player;
 
 public class RogueProtectStrategy implements Strategy {
     @Override
-    public void doOperation(Player r) {
+    /* Protect strategy for rogue */
+    public void doOperation(final Player r) {
         /* Change the modifiers */
         r.setBackstabRoguePercent(r.getBackstabRoguePercent()
                 - Constants.ROGUE_PRT_COEF_SUB);

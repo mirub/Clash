@@ -1,11 +1,13 @@
 package strategy;
 
 import constants.Constants;
-import player.*;
+import player.Player;
+
 
 public class PyromancerDamageStrategy implements Strategy {
     @Override
-    public void doOperation(Player p) {
+    /* Damage strategy for pyromancer */
+    public void doOperation(final Player p) {
         /* Changes the modifiers */
         p.setFireblastRoguePercent(p.getFireblastRoguePercent()
                 + Constants.PYRO_DMG_COEF_RAISE);

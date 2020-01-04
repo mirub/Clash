@@ -1,11 +1,12 @@
 package strategy;
 
 import constants.Constants;
-import player.*;
+import player.Player;
 
-public class WizardProtectStrategy implements Strategy{
+public class WizardProtectStrategy implements Strategy {
     @Override
-    public void doOperation(Player w) {
+    /* Protect strategy for wizard */
+    public void doOperation(final Player w) {
         /* Change the modifiers */
         w.setDrainRoguePercent(w.getDrainRoguePercent()
                 - Constants.WIZARD_PRT_COEF_SUB);

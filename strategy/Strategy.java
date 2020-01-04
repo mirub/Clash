@@ -1,7 +1,8 @@
 package strategy;
 
-import player.*;
+
+import player.Player;
 
 public interface Strategy {
-    public void doOperation(Player p);
+    void doOperation(Player p);
 }

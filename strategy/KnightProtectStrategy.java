@@ -1,11 +1,12 @@
 package strategy;
 
 import constants.Constants;
-import player.*;
+import player.Player;
 
 public class KnightProtectStrategy implements Strategy {
     @Override
-    public void doOperation(Player k) {
+    /* Protect strategy for player */
+    public void doOperation(final Player k) {
         /* Changes the modifiers */
         k.setExecuteRoguePercent(k.getExecuteRoguePercent()
                 - Constants.KNIGHT_PRT_COEF_SUB);
