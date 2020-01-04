@@ -1,28 +1,45 @@
 /* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package player;
 
+import angels.Angel;
+import angels.AngelEffect;
 import constants.Constants;
 import ground.BattleField;
+import magician.GreatMagician;
+import main.ReadInput;
+import strategy.Strategy;
 
-public final class Pyromancer extends Player implements Fighter, Fought {
+public final class Pyromancer extends Player implements Fighter, Fought, AngelEffect {
+
     public Pyromancer() { }
 
     public Pyromancer(final int id, final int initialHP, final int bonusHpLevel,
                       final BattleField g, final int x, final int y, final char c) {
-       super(id, initialHP, bonusHpLevel, g, x, y, c);
+        super(id, initialHP, bonusHpLevel, g, x, y, c);
+        this.setFireblastRoguePercent(Constants.FIREBLAST_ROGUE_PERCENT);
+        this.setFireblastKnightPercent(Constants.FIREBLAST_KNIGHT_PERCENT);
+        this.setFireblastPyroPercent(Constants.FIREBLAST_PYRO_PERCENT);
+        this.setFireblastWizardPercent(Constants.FIREBLAST_WIZARD_PERCENT);
+        this.setIgniteRoguePercent(Constants.IGNITE_ROGUE_PERCENT);
+        this.setIgniteKnightPercent(Constants.IGNITE_KNIGHT_PERCENT);
+        this.setIgnitePyroPercent(Constants.IGNITE_PYRO_PERCENT);
+        this.setIgniteWizardPercent(Constants.IGNITE_WIZARD_PERCENT);
     }
 
     /* Increases the level if needed */
     @Override
-    public void increaseLevel(final int level) {
+    public void increaseLevel(final int level, final ReadInput readInput) {
         int ok = 0;
-        while (this.getXp() >= this.toLevelUp()) {
-            this.setLevel(this.getLevel() + 1);
-            ok = 1;
-        }
-        if (ok == 1) {
-            this.setHp(Constants.INITIAL_PYRO_HP
-                    + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
+        if (this.getStatus() == 1) {
+            while (this.getXp() >= this.toLevelUp()) {
+                this.setLevel(this.getLevel() + 1);
+                readInput.printLevelUp(this);
+                ok = 1;
+            }
+            if (ok == 1) {
+                this.setHp(Constants.INITIAL_PYRO_HP
+                        + this.getLevel() * Constants.PYRO_HP_LEVEL_BONUS);
+            }
         }
     }
 
@@ -84,9 +101,9 @@ public final class Pyromancer extends Player implements Fighter, Fought {
         int igniteDamageRounded = Math.round(igniteDamage);
         int futureIgniteDamageRounded = Math.round(futureIgniteDamage);
 
-        fireblastDamage *= Constants.FIREBLAST_PYRO_PERCENT;
-        igniteDamage *= Constants.IGNITE_PYRO_PERCENT;
-        futureIgniteDamage *= Constants.IGNITE_PYRO_PERCENT;
+        fireblastDamage *= this.getFireblastPyroPercent();
+        igniteDamage *= this.getIgnitePyroPercent();
+        futureIgniteDamage *= this.getIgnitePyroPercent();
 
         fireblastDamageRounded = Math.round(fireblastDamage);
         igniteDamageRounded = Math.round(igniteDamage);
@@ -99,11 +116,6 @@ public final class Pyromancer extends Player implements Fighter, Fought {
         p.setHp(p.getHp() - totalDamage);
 
         p.setPreviousDamage(totalDamage);
-
-        if (p.getHp() <= 0) {
-            p.setStatus(0);
-            this.hasWon(p);
-        }
     }
 
     /* Implements the fight between a Pyromancer and a Knight */
@@ -115,9 +127,9 @@ public final class Pyromancer extends Player implements Fighter, Fought {
 
         k.removeOvertimeDamage();
 
-        fireblastDamage *= Constants.FIREBLAST_KNIGHT_PERCENT;
-        igniteDamage *= Constants.IGNITE_KNIGHT_PERCENT;
-        futureIgniteDamage *= Constants.IGNITE_KNIGHT_PERCENT;
+        fireblastDamage *= this.getFireblastKnightPercent();
+        igniteDamage *= this.getIgniteKnightPercent();
+        futureIgniteDamage *= this.getIgniteKnightPercent();
 
         int fireblastDamageRounded = Math.round(fireblastDamage);
         int igniteDamageRounded = Math.round(igniteDamage);
@@ -130,11 +142,6 @@ public final class Pyromancer extends Player implements Fighter, Fought {
         k.setHp(k.getHp() - totalDamage);
 
         k.setPreviousDamage(totalDamage);
-
-        if (k.getHp() <= 0) {
-            k.setStatus(0);
-            this.hasWon(k);
-        }
     }
 
     /* Implements the fight between a Pyromancer and a Rogue */
@@ -146,9 +153,9 @@ public final class Pyromancer extends Player implements Fighter, Fought {
 
         r.removeOvertimeDamage();
 
-        fireblastDamage *= Constants.FIREBLAST_ROGUE_PERCENT;
-        igniteDamage *= Constants.IGNITE_ROGUE_PERCENT;
-        futureIgniteDamage *= Constants.IGNITE_ROGUE_PERCENT;
+        fireblastDamage *= this.getFireblastRoguePercent();
+        igniteDamage *= this.getIgniteRoguePercent();
+        futureIgniteDamage *= this.getIgniteRoguePercent();
 
         int fireblastDamageRounded = Math.round(fireblastDamage);
         int igniteDamageRounded = Math.round(igniteDamage);
@@ -161,11 +168,6 @@ public final class Pyromancer extends Player implements Fighter, Fought {
         r.setHp(r.getHp() - totalDamage);
 
         r.setPreviousDamage(totalDamage);
-
-        if (r.getHp() <= 0) {
-            r.setStatus(0);
-            this.hasWon(r);
-        }
     }
 
     /* Implements the fight between a Pyromancer and a Wizard */
@@ -183,9 +185,9 @@ public final class Pyromancer extends Player implements Fighter, Fought {
         int totalDamage = fireblastDamageRounded + igniteDamageRounded;
         w.setPreviousDamage(totalDamage);
 
-        fireblastDamage *= Constants.FIREBLAST_WIZARD_PERCENT;
-        igniteDamage *= Constants.IGNITE_WIZARD_PERCENT;
-        futureIgniteDamage *= Constants.IGNITE_WIZARD_PERCENT;
+        fireblastDamage *= this.getFireblastWizardPercent();
+        igniteDamage *= this.getIgniteWizardPercent();
+        futureIgniteDamage *= this.getIgniteWizardPercent();
 
         fireblastDamageRounded = Math.round(fireblastDamage);
         igniteDamageRounded = Math.round(igniteDamage);
@@ -196,15 +198,20 @@ public final class Pyromancer extends Player implements Fighter, Fought {
 
         totalDamage = fireblastDamageRounded + igniteDamageRounded;
         w.setHp(w.getHp() - totalDamage);
-
-        if (w.getHp() <= 0) {
-            w.setStatus(0);
-            this.hasWon(w);
-        }
     }
 
     /* Accepts the fight from fighter "v" */
     public void accept(final Fighter v) {
         v.battle(this);
+    }
+
+    /* Accepts the effect from angel "a" */
+    public void isAffected(final Angel a, final ReadInput readInput,
+                           final GreatMagician greatMagician) {
+        a.affect(this, readInput, greatMagician); }
+
+    /* Chooses the strategy */
+    public void chooseStrategy(final Strategy strategy) {
+        strategy.doOperation(this);
     }
 }

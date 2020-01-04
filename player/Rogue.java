@@ -1,28 +1,44 @@
 /* Banu Miruna Elena - 321CA - League of OOP - Stage 1 - 2019 */
 package player;
 
+import angels.Angel;
 import constants.Constants;
 import ground.BattleField;
+import magician.GreatMagician;
+import main.ReadInput;
+import strategy.Strategy;
 
 public final class Rogue extends Player implements Fighter, Fought {
+
     public Rogue() { }
 
     public Rogue(final int id, final int initialHP, final int bonusHpLevel,
                  final BattleField g, final int x, final int y, final char c) {
         super(id, initialHP, bonusHpLevel, g, x, y, c);
+        this.setBackstabRoguePercent(Constants.BACKSTAB_ROGUE_PERCENT);
+        this.setBackstabKnightPercent(Constants.BACKSTAB_KNIGHT_PERCENT);
+        this.setBackstabPyroPercent(Constants.BACKSTAB_PYRO_PERCENT);
+        this.setBackstabWizardPercent(Constants.BACKSTAB_WIZARD_PERCENT);
+        this.setParalysisRoguePercent(Constants.PARALYSIS_ROGUE_PERCENT);
+        this.setParalysisKnightPercent(Constants.PARALYSIS_KNIGHT_PERCENT);
+        this.setParalysisPyroPercent(Constants.PARALYSIS_PYRO_PERCENT);
+        this.setParalysisWizardPercent(Constants.PARALYSIS_WIZARD_PERCENT);
     }
 
     /* Increases the level of the current player */
     @Override
-    public void increaseLevel(final int level) {
+    public void increaseLevel(final int level, final ReadInput readInput) {
         int ok = 0;
-        while (this.getXp() >= this.toLevelUp()) {
-            this.setLevel(this.getLevel() + 1);
-            ok = 1;
-        }
-        if (ok == 1) {
-            this.setHp(Constants.INITIAL_ROGUE_HP
-                    + this.getLevel() * Constants.ROGUE_HP_LEVEL_BONUS);
+        if (this.getStatus() == 1) {
+            while (this.getXp() >= this.toLevelUp()) {
+                this.setLevel(this.getLevel() + 1);
+                readInput.printLevelUp(this);
+                ok = 1;
+            }
+            if (ok == 1) {
+                this.setHp(Constants.INITIAL_ROGUE_HP
+                        + this.getLevel() * Constants.ROGUE_HP_LEVEL_BONUS);
+            }
         }
     }
 
@@ -63,8 +79,8 @@ public final class Rogue extends Player implements Fighter, Fought {
 
         p.removeOvertimeDamage();
 
-        basicBackstabDamage *= Constants.BACKSTAB_PYRO_PERCENT;
-        basicParalysisDamage *= Constants.PARALYSIS_PYRO_PERCENT;
+        basicBackstabDamage *= this.getBackstabPyroPercent();
+        basicParalysisDamage *= this.getParalysisPyroPercent();
 
         if (this.getAttackCount() % Constants.ROUND_NUMBER_BONUS == 0
                 && this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
@@ -91,11 +107,6 @@ public final class Rogue extends Player implements Fighter, Fought {
             p.setOvertimeDamageRound(Constants.STANDARD_IMMOBILITY_ROUNDS);
             p.setCanMove(0);
         }
-
-        if (p.getHp() <= 0) {
-            p.setStatus(0);
-            this.hasWon(p);
-        }
     }
 
     /* Implements the fight between a Rogue and a Knight */
@@ -103,8 +114,8 @@ public final class Rogue extends Player implements Fighter, Fought {
         float basicBackstabDamage = this.getBasicBackstabDamage();
         float basicParalysisDamage = this.getBasicParalysisDamage();
 
-        basicBackstabDamage *= Constants.BACKSTAB_KNIGHT_PERCENT;
-        basicParalysisDamage *= Constants.PARALYSIS_KNIGHT_PERCENT;
+        basicBackstabDamage *= this.getBackstabKnightPercent();
+        basicParalysisDamage *= this.getParalysisKnightPercent();
 
         if (this.getAttackCount() % Constants.ROUND_NUMBER_BONUS == 0
                 && this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
@@ -131,11 +142,6 @@ public final class Rogue extends Player implements Fighter, Fought {
             k.setOvertimeDamageRound(Constants.STANDARD_IMMOBILITY_ROUNDS);
             k.setCanMove(0);
         }
-
-        if (k.getHp() <= 0) {
-            k.setStatus(0);
-            this.hasWon(k);
-        }
     }
 
     /* Implements the fight between two Rogues */
@@ -145,8 +151,8 @@ public final class Rogue extends Player implements Fighter, Fought {
 
         r.removeOvertimeDamage();
 
-        basicBackstabDamage *= Constants.BACKSTAB_ROGUE_PERCENT;
-        basicParalysisDamage *= Constants.PARALYSIS_ROGUE_PERCENT;
+        basicBackstabDamage *= this.getBackstabRoguePercent();
+        basicParalysisDamage *= this.getParalysisRoguePercent();
 
         if (this.getAttackCount() % Constants.ROUND_NUMBER_BONUS == 0
                 && this.getGround().getGround().get(this.getCurrentX()).charAt(this.getCurrentY())
@@ -173,11 +179,6 @@ public final class Rogue extends Player implements Fighter, Fought {
             r.setOvertimeDamageRound(Constants.STANDARD_IMMOBILITY_ROUNDS);
             r.setCanMove(0);
         }
-
-        if (r.getHp() <= 0) {
-            r.setStatus(0);
-            this.hasWon(r);
-        }
     }
 
     /* Implements the fight between a Rogue and a Wizard*/
@@ -199,8 +200,8 @@ public final class Rogue extends Player implements Fighter, Fought {
         int totalDamage = basicBackstabDamageRounded + basicParalysisDamageRounded;
         w.setPreviousDamage(totalDamage);
 
-        basicBackstabDamage *= Constants.BACKSTAB_WIZARD_PERCENT;
-        basicParalysisDamage *= Constants.PARALYSIS_WIZARD_PERCENT;
+        basicBackstabDamage *= this.getBackstabWizardPercent();
+        basicParalysisDamage *= this.getParalysisWizardPercent();
 
         basicBackstabDamageRounded = Math.round(basicBackstabDamage);
         basicParalysisDamageRounded = Math.round(basicParalysisDamage);
@@ -219,14 +220,20 @@ public final class Rogue extends Player implements Fighter, Fought {
             w.setOvertimeDamageRound(Constants.STANDARD_IMMOBILITY_ROUNDS);
             w.setCanMove(0);
         }
-
-        if (w.getHp() <= 0) {
-            w.setStatus(0);
-            this.hasWon(w);
-        }
     }
+
     /* Accepts the attack from fighter "V" */
     public void accept(final Fighter v) {
         v.battle(this);
+    }
+
+    /* Accepts the effect from angel "a" */
+    public void isAffected(final Angel a, final ReadInput readInput,
+                           final GreatMagician greatMagician) {
+        a.affect(this, readInput, greatMagician); }
+
+    /* Chooses the strategy */
+    public void chooseStrategy(final Strategy strategy) {
+        strategy.doOperation(this);
     }
 }
