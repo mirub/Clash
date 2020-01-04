@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,10 +57,12 @@ public class LifeGiver extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, add hp */
-            readInput.printHelp(this, p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, p));
             p.setHp(p.getHp() + Constants.PYRO_LG_HP_RAISE);
             if (p.getHp() > p.getMaxHp()) {
                 p.setHp(p.getMaxHp());
@@ -69,10 +72,11 @@ public class LifeGiver extends Angel {
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, add hp */
-            readInput.printHelp(this, w);
+            greatMagician.setNotice(readInput.printHelp(this, w));
             w.setHp(w.getHp() + Constants.WIZARD_LG_HP_RAISE);
             if (w.getHp() > w.getMaxHp()) {
                 w.setHp(w.getMaxHp());
@@ -82,10 +86,11 @@ public class LifeGiver extends Angel {
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, add hp */
-            readInput.printHelp(this, k);
+            greatMagician.setNotice(readInput.printHelp(this, k));
             k.setHp(k.getHp() + Constants.KNIGHT_LG_HP_RAISE);
             if (k.getHp() > k.getMaxHp()) {
                 k.setHp(k.getMaxHp());
@@ -95,10 +100,11 @@ public class LifeGiver extends Angel {
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, add hp */
-            readInput.printHelp(this, r);
+            greatMagician.setNotice(readInput.printHelp(this, r));
             r.setHp(r.getHp() + Constants.ROGUE_LG_HP_RAISE);
             if (r.getHp() > r.getMaxHp()) {
                 r.setHp(r.getMaxHp());

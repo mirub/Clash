@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,7 +57,8 @@ public class LevelUpAngel extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, raise level */
             p.setXp(Constants.STANDARD_LEVEL_XP
@@ -64,8 +66,9 @@ public class LevelUpAngel extends Angel {
             p.setLevel(p.getLevel() + 1);
             p.setHp(Constants.INITIAL_PYRO_HP + p.getLevel()
                     * Constants.PYRO_HP_LEVEL_BONUS);
-            readInput.printHelp(this, p);
-            readInput.printLevelUp(p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, p));
+            greatMagician.setNotice(readInput.printLevelUp(p));
             /* If the player is alive, change modifiers */
             p.setFireblastRoguePercent(p.getFireblastRoguePercent()
                     + Constants.PYRO_LA_RAISE);
@@ -88,7 +91,8 @@ public class LevelUpAngel extends Angel {
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, raise level */
             w.setXp(Constants.STANDARD_LEVEL_XP
@@ -96,8 +100,9 @@ public class LevelUpAngel extends Angel {
             w.setLevel(w.getLevel() + 1);
             w.setHp(Constants.INITIAL_WIZARD_HP + w.getLevel()
                     * Constants.WIZARD_HP_LEVEL_BONUS);
-            readInput.printHelp(this, w);
-            readInput.printLevelUp(w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, w));
+            greatMagician.setNotice(readInput.printLevelUp(w));
             /* If the player is alive, change modifiers */
             w.setDrainRoguePercent(w.getDrainRoguePercent()
                     + Constants.WIZARD_LA_RAISE);
@@ -118,7 +123,8 @@ public class LevelUpAngel extends Angel {
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, raise level */
             k.setXp(Constants.STANDARD_LEVEL_XP
@@ -126,8 +132,9 @@ public class LevelUpAngel extends Angel {
             k.setLevel(k.getLevel() + 1);
             k.setHp(Constants.INITIAL_KNIGHT_HP + k.getLevel()
                     * Constants.KNIGHT_HP_LEVEL_BONUS);
-            readInput.printHelp(this, k);
-            readInput.printLevelUp(k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, k));
+            greatMagician.setNotice(readInput.printLevelUp(k));
             /* If the player is alive, change modifiers */
             k.setExecuteRoguePercent(k.getExecuteRoguePercent()
                     + Constants.KNIGHT_LA_RAISE);
@@ -148,7 +155,8 @@ public class LevelUpAngel extends Angel {
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, raise level */
             r.setXp(Constants.STANDARD_LEVEL_XP
@@ -156,8 +164,9 @@ public class LevelUpAngel extends Angel {
             r.setLevel(r.getLevel() + 1);
             r.setHp(Constants.INITIAL_ROGUE_HP
                     + r.getLevel() * Constants.ROGUE_HP_LEVEL_BONUS);
-            readInput.printHelp(this, r);
-            readInput.printLevelUp(r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, r));
+            greatMagician.setNotice(readInput.printLevelUp(r));
             /* If the player is alive, change modifiers */
             r.setBackstabRoguePercent(r.getBackstabRoguePercent()
                     + Constants.ROGUE_LA_RAISE);

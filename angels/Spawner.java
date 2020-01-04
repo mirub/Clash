@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,10 +57,12 @@ public class Spawner extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 0) {
             /*If the player is dead, bring it back to life */
-            readInput.printHelp(this, p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, p));
             p.setStatus(1);
             if (p.getDoomerDead() == 0) {
                 /*If the player was not killed by Doomer,
@@ -68,16 +71,19 @@ public class Spawner extends Angel {
                 p.setXp(p.getRoundXP());
             }
             p.setHp(Constants.PYRO_SPAWN_HP);
-            readInput.printResurrection(p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printResurrection(p));
         }
     }
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 0) {
             /*If the player is dead, bring it back to life */
-            readInput.printHelp(this, w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, w));
             w.setStatus(1);
             if (w.getDoomerDead() == 0) {
                 /*If the player was not killed by Doomer,
@@ -86,16 +92,19 @@ public class Spawner extends Angel {
                 w.setXp(w.getRoundXP());
             }
             w.setHp(Constants.WIZARD_SPAWN_HP);
-            readInput.printResurrection(w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printResurrection(w));
         }
     }
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 0) {
             /*If the player is dead, bring it back to life */
-            readInput.printHelp(this, k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, k));
             k.setStatus(1);
             if (k.getDoomerDead() == 0) {
                 /*If the player was not killed by Doomer,
@@ -104,16 +113,19 @@ public class Spawner extends Angel {
                 k.setXp(k.getRoundXP());
             }
             k.setHp(Constants.KNIGHT_SPAWN_HP);
-            readInput.printResurrection(k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printResurrection(k));
         }
     }
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 0) {
             /*If the player is dead, bring it back to life */
-            readInput.printHelp(this, r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, r));
             r.setStatus(1);
             if (r.getDoomerDead() == 0) {
                 /*If the player was not killed by Doomer,
@@ -122,7 +134,8 @@ public class Spawner extends Angel {
                 r.setXp(r.getRoundXP());
             }
             r.setHp(Constants.ROGUE_SPAWN_HP);
-            readInput.printResurrection(r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printResurrection(r));
         }
     }
 }

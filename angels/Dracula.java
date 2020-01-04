@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,13 +57,14 @@ public class Dracula extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, substract hp */
-            readInput.printHit(this, p);
+            greatMagician.setNotice(readInput.printHit(this, p));
             p.setHp(p.getHp() - Constants.PYRO_DRACULA_HP_SUB);
             if (p.getHp() <= 0) {
-                readInput.killedByAngel(p);
+                greatMagician.setNotice(readInput.killedByAngel(p));
                 p.setStatus(0);
             }
             /* If the player is alive, change modifiers */
@@ -88,14 +90,15 @@ public class Dracula extends Angel {
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, substract hp */
-            readInput.printHit(this, w);
+            greatMagician.setNotice(readInput.printHit(this, w));
             w.setHp(w.getHp() - Constants.WIZARD_DRACULA_HP_SUB);
             if (w.getHp() <= 0) {
                 w.setStatus(0);
-                readInput.killedByAngel(w);
+                greatMagician.setNotice(readInput.killedByAngel(w));
             }
             /* If the player is alive, change modifiers */
             w.setDrainRoguePercent(w.getDrainRoguePercent()
@@ -117,14 +120,15 @@ public class Dracula extends Angel {
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, substract hp */
-            readInput.printHit(this, k);
+            greatMagician.setNotice(readInput.printHit(this, k));
             k.setHp(k.getHp() - Constants.KNIGHT_DRACULA_HP_SUB);
             if (k.getHp() <= 0) {
                 k.setStatus(0);
-                readInput.killedByAngel(k);
+                greatMagician.setNotice(readInput.killedByAngel(k));
             }
             /* If the player is alive, change modifiers */
             k.setExecuteRoguePercent(k.getExecuteRoguePercent()
@@ -146,13 +150,14 @@ public class Dracula extends Angel {
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, substract hp */
-            readInput.printHit(this, r);
+            greatMagician.setNotice(readInput.printHit(this, r));
             r.setHp(r.getHp() - Constants.ROGUE_DRACULA_HP_SUB);
             if (r.getHp() <= 0) {
-                readInput.killedByAngel(r);
+                greatMagician.setNotice(readInput.killedByAngel(r));
                 r.setStatus(0);
             }
             /* If the player is alive, change modifiers */

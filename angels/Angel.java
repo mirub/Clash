@@ -1,5 +1,6 @@
 package angels;
 
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -67,14 +68,14 @@ public abstract class Angel implements AngelAffect {
     }
 
     @Override
-    public abstract void affect(Pyromancer p, ReadInput readInput);
+    public abstract void affect(Pyromancer p, ReadInput readInput, GreatMagician greatMagician);
 
     @Override
-    public abstract void affect(Wizard w, ReadInput readInput);
+    public abstract void affect(Wizard w, ReadInput readInput, GreatMagician greatMagician);
 
     @Override
-    public abstract void affect(Knight k, ReadInput readInput);
+    public abstract void affect(Knight k, ReadInput readInput, GreatMagician greatMagician);
 
     @Override
-    public abstract void affect(Rogue r, ReadInput readInput);
+    public abstract void affect(Rogue r, ReadInput readInput, GreatMagician greatMagician);
 }

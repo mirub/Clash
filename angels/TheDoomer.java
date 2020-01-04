@@ -1,5 +1,6 @@
 package angels;
 
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -55,49 +56,57 @@ public class TheDoomer extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, kill it */
             p.setStatus(0);
             p.setDoomerDead(1);
-            readInput.printHit(this, p);
-            readInput.killedByAngel(p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHit(this, p));
+            greatMagician.setNotice(readInput.killedByAngel(p));
         }
     }
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, kill it */
             w.setStatus(0);
             w.setDoomerDead(1);
-            readInput.printHit(this, w);
-            readInput.killedByAngel(w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHit(this, w));
+            greatMagician.setNotice(readInput.killedByAngel(w));
         }
     }
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, kill it */
             k.setStatus(0);
             k.setDoomerDead(1);
-            readInput.printHit(this, k);
-            readInput.killedByAngel(k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHit(this, k));
+            greatMagician.setNotice(readInput.killedByAngel(k));
         }
     }
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, kill it */
             r.setStatus(0);
             r.setDoomerDead(1);
-            readInput.printHit(this, r);
-            readInput.killedByAngel(r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHit(this, r));
+            greatMagician.setNotice(readInput.killedByAngel(r));
         }
     }
 }

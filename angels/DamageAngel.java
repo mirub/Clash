@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,10 +57,12 @@ public class DamageAngel extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, change modifiers*/
-            readInput.printHelp(this, p);
+            /* Notice the magician*/
+            greatMagician.setNotice(readInput.printHelp(this, p));
             p.setFireblastRoguePercent(p.getFireblastRoguePercent()
                     + Constants.PYRO_DA_RAISE);
             p.setFireblastKnightPercent(p.getFireblastKnightPercent()
@@ -81,10 +84,12 @@ public class DamageAngel extends Angel {
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, change modifiers*/
-            readInput.printHelp(this, w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, w));
             w.setDrainRoguePercent(w.getDrainRoguePercent()
                     + Constants.WIZARD_DA_RAISE);
             w.setDrainKnightPercent(w.getDrainKnightPercent()
@@ -104,10 +109,12 @@ public class DamageAngel extends Angel {
 
     @Override
     /* Affects the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, change modifiers*/
-            readInput.printHelp(this, k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, k));
             k.setExecuteRoguePercent(k.getExecuteRoguePercent()
                     + Constants.KNIGHT_DA_RAISE);
             k.setExecutePyroPercent(k.getExecutePyroPercent()
@@ -127,10 +134,12 @@ public class DamageAngel extends Angel {
 
     @Override
     /* Affects the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, change modifiers*/
-            readInput.printHelp(this, r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, r));
             r.setBackstabRoguePercent(r.getBackstabRoguePercent()
                     + Constants.ROGUE_DA_RAISE);
             r.setBackstabKnightPercent(r.getBackstabKnightPercent()

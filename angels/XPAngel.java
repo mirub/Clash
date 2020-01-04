@@ -1,6 +1,7 @@
 package angels;
 
 import constants.Constants;
+import magician.GreatMagician;
 import main.ReadInput;
 import player.Knight;
 import player.Pyromancer;
@@ -56,44 +57,52 @@ public class XPAngel extends Angel {
 
     @Override
     /* Affects the pyromancer */
-    public void affect(final Pyromancer p, final ReadInput readInput) {
+    public void affect(final Pyromancer p, final ReadInput readInput,
+                       final GreatMagician greatMagician) {
         if (p.getStatus() == 1) {
             /* If the player is alive, add xp */
             p.setXp(p.getXp() + Constants.PYRO_XA_XP);
-            readInput.printHelp(this, p);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, p));
             p.increaseLevel(p.getLevel(), readInput);
         }
     }
 
     @Override
     /* Affects the wizard */
-    public void affect(final Wizard w, final ReadInput readInput) {
+    public void affect(final Wizard w, final ReadInput readInput,
+                       final  GreatMagician greatMagician) {
         if (w.getStatus() == 1) {
             /* If the player is alive, add xp */
             w.setXp(w.getXp() + Constants.WIZARD_XA_XP);
-            readInput.printHelp(this, w);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, w));
             w.increaseLevel(w.getLevel(), readInput);
         }
     }
 
     @Override
     /* Affect the knight */
-    public void affect(final Knight k, final ReadInput readInput)  {
+    public void affect(final Knight k, final ReadInput readInput,
+                       final GreatMagician greatMagician)  {
         if (k.getStatus() == 1) {
             /* If the player is alive, add xp */
             k.setXp(k.getXp() + Constants.KNIGHT_XA_XP);
-            readInput.printHelp(this, k);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, k));
             k.increaseLevel(k.getLevel(), readInput);
         }
     }
 
     @Override
     /* Affect the rogue */
-    public void affect(final Rogue r, final ReadInput readInput) {
+    public void affect(final Rogue r, final ReadInput readInput,
+                       final  GreatMagician greatMagician) {
         if (r.getStatus() == 1) {
             /* If the player is alive, add xp */
             r.setXp(r.getXp() + Constants.ROGUE_XA_XP);
-            readInput.printHelp(this, r);
+            /* Notice the magician */
+            greatMagician.setNotice(readInput.printHelp(this, r));
             r.increaseLevel(r.getLevel(), readInput);
         }
     }
