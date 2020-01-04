@@ -7,11 +7,14 @@ import java.util.List;
 public final class GameInput {
     private int n, m; // sizes of the battleground
     private List<String> ground = new ArrayList<String>(n);
-    private  int p; // number of players
+    private int p; // number of players
     private List<String> players = new ArrayList<String>(p);
     private ArrayList<ArrayList<Integer>> positions = new ArrayList<ArrayList<Integer>>(p);
     private int r; // rounds number
     private List<String> roundMoves = new ArrayList<String>(r);
+    private List<Integer> angelsPerRound = new ArrayList<Integer>(r);
+    private int a; // number of angels
+    private List<String> angels = new ArrayList<String>(a);
 
     public GameInput() {
         this.ground = null;
@@ -21,15 +24,22 @@ public final class GameInput {
         this.m = 0;
         this.p = 0;
         this.r = 0;
+        this.angelsPerRound = null;
+        this.a = 0;
+        this.angels = null;
     }
 
     public GameInput(final int n, final int m, final List<String> ground, final int p,
                      final List<String> players, final ArrayList<ArrayList<Integer>> positions,
-                     final int r, final List<String> roundMoves) {
+                     final int r, final List<String> roundMoves, final List<Integer>
+                     angelsPerRound, final int a, final List<String> angels) {
         this.ground = ground;
         this.players = players;
         this.positions = positions;
         this.roundMoves = roundMoves;
+        this.angelsPerRound = angelsPerRound;
+        this.angels = angels;
+        this.a = a;
         this.n = n;
         this.m = m;
         this.p = p;
@@ -72,6 +82,18 @@ public final class GameInput {
         return roundMoves;
     }
 
+    public List<Integer> getAngelsPerRound() {
+        return angelsPerRound;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public List<String> getAngels() {
+        return angels;
+    }
+
     public boolean isValidInput() {
         boolean size = n != 0 && m != 0;
         boolean groundNotEmpty = ground.size() > 0;
@@ -80,7 +102,11 @@ public final class GameInput {
         boolean positionsNotEmpty = positions.size() > 0;
         boolean rounds = r != 0;
         boolean roundsNotEmpty = roundMoves.size() > 0;
+        boolean angelNumberNotEmpty = angelsPerRound.size() > 0;
+        boolean areAngels = a != 0;
+        boolean angelsNotEmpty = angels.size() > 0;
         return size && groundNotEmpty && play && playersNotEmpty
-                && rounds && roundsNotEmpty && positionsNotEmpty;
+                && rounds && roundsNotEmpty && positionsNotEmpty
+                && angelNumberNotEmpty && areAngels && angelsNotEmpty;
     }
 }
